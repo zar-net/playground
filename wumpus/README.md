@@ -39,12 +39,12 @@ python game.py
 
 ### Controls
 
-Arrow Keys: Move the player.
-W: Shoot an arrow upwards.
-S: Shoot an arrow downwards.
-A: Shoot an arrow to the left.
-D: Shoot an arrow to the right.
-Q: Quit the game.
+- **Arrow Keys**: Move the player.
+- **W**: Shoot an arrow upwards.
+- **S**: Shoot an arrow downwards.
+- **A**: Shoot an arrow to the left.
+- **D**: Shoot an arrow to the right.
+- **Q**: Quit the game.
 
 ## File Structure
 
@@ -64,4 +64,3 @@ wumpus.py: Contains the Wumpus class and Wumpus-specific logic.
 
 **Losing:** The game ends if you fall into a pit or are caught by the Wumpus.
 
-## Line of Sight
