@@ -1,6 +1,6 @@
 # Retro Time Zone Display
 
-This Python script displays the current date, time, and timezone information for specified timezones in a retro, organized manner using the `curses` library. The script allows for a colorful, text-based user interface that can fit within 80 or 120 columns, based on user input.
+This Python script displays the current date, time, and timezone information for specified timezones in a retro, organized manner using the `curses` library. The script allows for a colorful, text-based user interface that can fit within 80 or 120 columns, based on user input. This code was written in honour of my teachers at Ryerson and my Dad. Thanks Gerry (Dad), Mastoras, Josh, Raj, and of course Mr. Smith from Pineway Public school. Great teachers, each of them!
 
 ## Features
 
