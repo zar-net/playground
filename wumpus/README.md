@@ -48,9 +48,9 @@ python game.py
 
 ## File Structure
 
-game.py: Contains the main game logic and the Game class.
-player.py: Contains the Player class and player-specific logic.
-wumpus.py: Contains the Wumpus class and Wumpus-specific logic.
+- game.py: Contains the main game logic and the Game class.
+- player.py: Contains the Player class and player-specific logic.
+- wumpus.py: Contains the Wumpus class and Wumpus-specific logic.
 
 ## Gameplay
 
