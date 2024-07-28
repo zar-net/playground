@@ -26,10 +26,10 @@ pip install pytz
 Save the script as retro_timezone_display.py.
 Run the script using Python with the desired color and width options.
 
-## Command-line Arguments
+### Command-line Arguments
 
---color: Set the display color. Choices are amber or green. Default is amber.
---width: Set the display width. Choices are 80 or 120 columns. Default is 80.
+- `--color`: Set the display color. Choices are `amber` or `green`. Default is `amber`.
+- `--width`: Set the display width. Choices are `80` or `120` columns. Default is `80`.
 
 ### Example Usage
 
