@@ -2,6 +2,8 @@
 
 This Python script displays the current date, time, and timezone information for specified timezones in a retro, organized manner using the `curses` library. The script allows for a colorful, text-based user interface that can fit within 80 or 120 columns, based on user input. This code was written in honour of my teachers at Ryerson and my Dad. Thanks Gerry (Dad), Mastoras, Josh, Raj, and of course Mr. Smith from Pineway Public school. Great teachers, each of them!
 
+![timezone_screen](https://github.com/user-attachments/assets/31ce5db9-43cb-4694-aab1-262ee7c591f4)
+
 ## Features
 
 - Displays the current date, time, and timezone information for multiple timezones.
