@@ -2,6 +2,18 @@ import curses
 import argparse
 from town_map import TownMap
 
+def get_door_direction(stdscr):
+    while True:
+        key = stdscr.getch()
+        if key == curses.KEY_UP:
+            return (0, -1)
+        elif key == curses.KEY_DOWN:
+            return (0, 1)
+        elif key == curses.KEY_LEFT:
+            return (-1, 0)
+        elif key == curses.KEY_RIGHT:
+            return (1, 0)
+
 def main(stdscr, load_filename=None):
     curses.curs_set(0)  # Hide the cursor
     stdscr.nodelay(1)  # Non-blocking input
@@ -12,6 +24,7 @@ def main(stdscr, load_filename=None):
     offset_x = 0
     offset_y = 0
     show_micro_map = False
+    town.original_char = ' '
 
     while True:
         stdscr.clear()
@@ -21,7 +34,11 @@ def main(stdscr, load_filename=None):
             town.micro_map(stdscr)
         else:
             town.draw(stdscr, offset_x, offset_y)
-            stdscr.addstr(0, 0, f"Town: {town.town_name}")
+            building_name = town.in_building()
+            if building_name:
+                stdscr.addstr(0, 0, f"Town: {town.town_name} -- Building: {building_name}")
+            else:
+                stdscr.addstr(0, 0, f"Town: {town.town_name}")
 
         key = stdscr.getch()
 
@@ -33,15 +50,31 @@ def main(stdscr, load_filename=None):
             show_micro_map = False
         elif key == ord('R'):
             stdscr.clear()  # Clear the screen to refresh
+        elif key == ord('o'):  # Open door
+            direction = get_door_direction(stdscr)
+            town.open_door(direction)
+        elif key == ord('c'):  # Close door
+            direction = get_door_direction(stdscr)
+            town.close_door(direction)
         elif not show_micro_map:
             if key == curses.KEY_UP:
-                offset_y = max(0, offset_y - 1)
+                town.move_player(0, -1)
             elif key == curses.KEY_DOWN:
-                offset_y = min(town.height - height, offset_y + 1)
+                town.move_player(0, 1)
             elif key == curses.KEY_LEFT:
-                offset_x = max(0, offset_x - 1)
+                town.move_player(-1, 0)
             elif key == curses.KEY_RIGHT:
-                offset_x = min(town.width - width, offset_x + 1)
+                town.move_player(1, 0)
+
+            # Update offset for scrolling
+            if town.player_x < offset_x + 2:
+                offset_x = max(0, town.player_x - 2)
+            elif town.player_x > offset_x + width - 3:
+                offset_x = min(town.width - width, town.player_x - width + 3)
+            if town.player_y < offset_y + 2:
+                offset_y = max(0, town.player_y - 2)
+            elif town.player_y > offset_y + height - 3:
+                offset_y = min(town.height - height, town.player_y - height + 3)
 
         stdscr.refresh()
 
