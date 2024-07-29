@@ -3,15 +3,17 @@ from edo_map import EdoMap
 
 class TownMap(EdoMap):
     def __init__(self, width=160, height=40, load_filename=None):
+        self.last_direction = (0, 0)
+        self.buildings = []
+        self.building_names = {}
         if load_filename:
             self.load_state(load_filename)
         else:
             self.town_name = self.random_town_name()
-            self.buildings = []
             super().__init__(width, height)
 
     def random_town_name(self):
-        town_names = ["Tokyo", "Kyoto", "Osaka", "Hiroshima", "Nara", "Nagoya", "Kobe", "Fukuoka", "Sapporo", "Sendai"]
+        town_names = ["Hagi", "Kakunodate", "Nagamachi", "Kitsuki", "Tsuwano", "Yokaichi", "Fukiya", "Imaicho", "Sawara", "Tsumago", "Magome", "Ouchijuku", "Narai"]
         return random.choice(town_names)
 
     def tatami_size(self, num_tatami):
@@ -39,7 +41,7 @@ class TownMap(EdoMap):
 
     def place_buildings(self):
         num_buildings = random.randint(10, 20)
-        for _ in range(num_buildings):
+        for building_num in range(num_buildings):
             shape = random.choice(['square', 'rectangle'])
             if shape == 'square':
                 size = random.randint(1, 2)  # Square side length in spaces (each space is 3 feet)
@@ -60,7 +62,7 @@ class TownMap(EdoMap):
                 y = random.randint(2, max_y)
                 if self.is_space_available(x, y, building_width, building_height):
                     break
-            self.add_building(x, y, building_width, building_height)
+            self.add_building(x, y, building_width, building_height, f"TBD {building_num + 1}")
 
     def is_space_available(self, x, y, width, height):
         for i in range(y - 2, y + height + 2):
@@ -70,7 +72,7 @@ class TownMap(EdoMap):
                         return False
         return True
 
-    def add_building(self, x, y, width, height):
+    def add_building(self, x, y, width, height, name):
         door_side = random.choice(['top', 'bottom', 'left', 'right'])
         if door_side in ['top', 'bottom']:
             door_position = random.randint(x + 1, x + width - 2)
@@ -92,6 +94,7 @@ class TownMap(EdoMap):
                         self.map[i][j] = '#'
                 else:
                     self.map[i][j] = ' '
+        self.building_names[(x, y, width, height)] = name
 
     def place_streets(self):
         for y in range(self.height):
@@ -124,6 +127,8 @@ class TownMap(EdoMap):
                 file.write("".join(row) + "\n")
             file.write(f"Town name: {self.town_name}\n")
             file.write(f"Player position: ({self.player_x}, {self.player_y})\n")
+            for (x, y, width, height), name in self.building_names.items():
+                file.write(f"Building: {x},{y},{width},{height},{name}\n")
 
     def load_state(self, filename):
         with open(filename, "r") as file:
@@ -134,9 +139,49 @@ class TownMap(EdoMap):
             self.player_x, self.player_y = map(int, player_position.strip("()").split(", "))
             self.height = len(self.map)
             self.width = len(self.map[0]) if self.height > 0 else 0
+            self.building_names = {}
+            for line in lines[:-2]:
+                if line.startswith("Building:"):
+                    parts = line.split(": ")[1].split(',')
+                    x, y, width, height, name = int(parts[0]), int(parts[1]), int(parts[2]), int(parts[3]), parts[4]
+                    self.building_names[(x, y, width, height)] = name
             print(f"Loaded map with dimensions: {self.width}x{self.height}")
             print(f"Town name: {self.town_name}")
             print(f"Player position: ({self.player_x}, {self.player_y})")
+
+    def move_player(self, dx, dy):
+        new_x = self.player_x + dx
+        new_y = self.player_y + dy
+        if 0 <= new_x < self.width and 0 <= new_y < self.height:
+            if self.map[new_y][new_x] in [' ', '.', '-']:
+                self.map[self.player_y][self.player_x] = self.original_char
+                self.player_x = new_x
+                self.player_y = new_y
+                self.original_char = self.map[self.player_y][self.player_x]
+                self.map[self.player_y][self.player_x] = '@'
+                self.last_direction = (dx, dy)
+
+    def open_door(self, direction):
+        dx, dy = direction
+        door_x = self.player_x + dx
+        door_y = self.player_y + dy
+        if 0 <= door_x < self.width and 0 <= door_y < self.height:
+            if self.map[door_y][door_x] == '+':
+                self.map[door_y][door_x] = '-'
+
+    def close_door(self, direction):
+        dx, dy = direction
+        door_x = self.player_x + dx
+        door_y = self.player_y + dy
+        if 0 <= door_x < self.width and 0 <= door_y < self.height:
+            if self.map[door_y][door_x] == '-':
+                self.map[door_y][door_x] = '+'
+
+    def in_building(self):
+        for (x, y, width, height), name in self.building_names.items():
+            if x <= self.player_x < x + width and y <= self.player_y < y + height:
+                return name
+        return None
 
     def micro_map(self, stdscr):
         screen_height, screen_width = stdscr.getmaxyx()
