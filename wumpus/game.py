@@ -115,18 +115,32 @@ class Game:
         for y in range(MAP_HEIGHT):
             for x in range(MAP_WIDTH):
                 if [x, y] == self.player.position:
-                    self.stdscr.addch(y, x, '@', curses.color_pair(3) | curses.A_BOLD)
+                    
+                    self.stdscr.attron(curses.color_pair(3))
+                    self.stdscr.addch(y, x, '@')
+                    self.stdscr.attroff(curses.color_pair(3))
+                    
                 elif self.revealed_map[y][x] != ' ':
                     if [x, y] in self.wumpus.positions:
-                        self.stdscr.addch(y, x, 'W', curses.color_pair(1))
+                        self.stdscr.attron(curses.color_pair(1))
+                        self.stdscr.addch(y, x, 'W')
+                        self.stdscr.attroff(curses.color_pair(1))                        
                     elif [x, y] in self.pit_pos:
-                        self.stdscr.addch(y, x, 'P', curses.color_pair(2))
+                        self.stdscr.attron(curses.color_pair(2))
+                        self.stdscr.addch(y, x, 'P')
+                        self.stdscr.attroff(curses.color_pair(2))                        
                     elif [x, y] in self.gold_pos:
-                        self.stdscr.addch(y, x, 'G', curses.color_pair(4))
+                        self.stdscr.attron(curses.color_pair(4))
+                        self.stdscr.addch(y, x, 'G')
+                        self.stdscr.attroff(curses.color_pair(4))                        
                     elif self.map[y][x] == '.':
-                        self.stdscr.addch(y, x, '.', curses.color_pair(5))
+                        self.stdscr.attron(curses.color_pair(5))
+                        self.stdscr.addch(y, x, '.')
+                        self.stdscr.attroff(curses.color_pair(5))   
                     elif self.map[y][x] == '#':
-                        self.stdscr.addch(y, x, '#', curses.color_pair(6))
+                        self.stdscr.attron(curses.color_pair(6))
+                        self.stdscr.addch(y, x, '#')
+                        self.stdscr.attroff(curses.color_pair(6)) 
 
         # Display the number of arrows left
         self.stdscr.addstr(0, 0, f'Arrows: {self.player.arrows}', curses.color_pair(3))
