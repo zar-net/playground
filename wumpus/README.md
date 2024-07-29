@@ -2,7 +2,8 @@
 
 Hunt the Wumpus is a text-based adventure game implemented using Python and ncurses. The player must navigate through a series of caves to find and shoot the Wumpus, avoiding pits and collecting gold along the way. I originally created this version as a foundation for a ROGUE-like game I want to build out and this was a model for a line of sight algorithm using  Bresenham’s line algorithm and ray casting
 
-![wumpus_screen](https://github.com/user-attachments/assets/38b32cdc-447b-45c6-bee3-ef3347a2ccc9)
+![wumpus_color](https://github.com/user-attachments/assets/47f15745-8121-47b4-a75a-61f130a6925b)
+
 
 ## Features
 
