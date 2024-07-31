@@ -64,3 +64,20 @@ The NTDS.dit file is a database that stores Active Directory data, including use
 John Smith:1001:AAD3B435B51404EEAAD3B435B51404EE:E52CAC67419A9A22A47E1519D1E8A70C:::
 Jane Doe:1002:AAD3B435B51404EEAAD3B435B51404EE:C27AD7E6842A1A22C2B7B7A4B8E7A6A4:::
 ```
+## Handling Issues
+If an error occurs because the execution policy on your system is set to prevent the running of unsigned scripts, use the following steps:
+
+```
+# Open PowerShell as Administrator
+# Check current execution policy
+Get-ExecutionPolicy
+
+# Temporarily set execution policy to Bypass
+Set-ExecutionPolicy Bypass -Scope Process
+
+# Run the script
+.\parse_ntds.ps1 -Option -c -InputFile inputfile.txt
+
+# Revert execution policy (if needed)
+Set-ExecutionPolicy Restricted -Scope Process
+```
