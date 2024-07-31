@@ -9,6 +9,7 @@ in PowerShell. The scripts can output the parsed data into a CSV file with heade
 
 - `parse_ntds.sh`: A Bash script to parse NTDS.dit data.
 - `parse_ntds.py`: A Python script to parse NTDS.dit data.
+- `parse_ntds.ps1`: A PowerShell script to parse NTDS.dit data.
 - `README.md`: This file.
 
 ## Usage
@@ -35,6 +36,20 @@ To list NT hashes only:
 ```
 python parse_ntds.py -nt inputfile.txt
 ```
+
+### PowerShell Script
+To parse the NTDS.dit data into a CSV file:
+
+```
+.\parse_ntds.ps1 -Option -c -InputFile inputfile.txt
+```
+
+To list NT hashes only:
+
+```
+.\parse_ntds.ps1 -Option -nt -InputFile inputfile.txt
+```
+
 ## Definition of NTDS Content
 The NTDS.dit file is a database that stores Active Directory data, including user account information and password hashes. Each line typically contains the following fields separated by colons (:):
 
