@@ -42,4 +42,15 @@ Coding is not a solitary pursuit. It is a collaborative effort, a community of l
 The open-source movement exemplifies this, where coders from around the world come together to create, share, and improve software. This 
 sense of community and shared purpose adds another dimension to the joy of coding, fostering a spirit of camaraderie and mutual support.
 
+## Table of Contents
+
+### Rust
+
+- **rust-hello** is a hello world application that uses terminal colors.
+- **rust_jwt_example** shows a basic implementation of JWT for authentication management
+- **objcache** is a basic asychnronous object cache
+
+### Python
+
+### Other
 
