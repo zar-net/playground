@@ -49,6 +49,7 @@ sense of community and shared purpose adds another dimension to the joy of codin
 - **rust-hello** is a hello world application that uses terminal colors.
 - **rust_jwt_example** shows a basic implementation of JWT for authentication management
 - **objcache** is a basic asychnronous object cache
+- **rust-rest** shows some basic use of the REST API using CRUD and JWT using actix_web
 
 ### Python
 
